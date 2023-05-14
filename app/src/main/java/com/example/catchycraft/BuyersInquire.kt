@@ -194,8 +194,16 @@ class BuyersInquire : Fragment() {
             }})
         return view
     }
-
+    private fun isPhoneNumberValid(phoneNumber: String): Boolean {
+        return phoneNumber.length == 10
+    }
     private fun addProduct(title:String,description:String,phoneNumber:String,amount:String,url:String,bottomSheetDialog: BottomSheetDialog){
+
+        if (!isPhoneNumberValid(phoneNumber)) {
+            Toast.makeText(context, "Invalid phone number. Please enter a 10-digit number.", Toast.LENGTH_SHORT).show()
+            return  // Abort the function execution
+        }
+
         val refMyProduct=
             firebaseFirestore.collection(firebaseAuth.currentUser!!.uid).document("myInquires").collection("myInquires")
         val refAllProduct=
